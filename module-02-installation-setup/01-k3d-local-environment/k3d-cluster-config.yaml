@@ -1,0 +1,53 @@
+# Argo CD beginner course — local cluster definition
+#
+# Validated against: k3d v5.9.0 · k3s v1.35.6+k3s1 · Docker 27.4.1 · Colima 0.8.1
+#                    macOS on Apple Silicon (M-series)
+#
+# Create the cluster with:
+#     k3d cluster create --config k3d-cluster-config.yaml
+#
+# A config file is used instead of a long `k3d cluster create` flag string for one
+# reason: this file is the cluster. It is version-controlled, reviewable, and
+# reproducible months later — the same argument GitOps makes about your workloads,
+# applied to the thing they run on. You will re-create this cluster several times
+# during the course; you should never have to remember which flags you used.
+#
+# NOTE: this lesson stops at "cluster is up and reachable". Argo CD is not
+# installed here — that is the next lesson.
+
+apiVersion: k3d.io/v1alpha5
+kind: Simple
+metadata:
+  name: argocd-101
+
+# Pinned deliberately. k3d's built-in default image tracks whatever that k3d
+# release shipped with, which drifts. Argo CD 3.4 is tested against Kubernetes
+# v1.32-v1.35, so v1.35.6 is the newest version inside that tested matrix.
+# Do not "upgrade" this casually — a newer minor may fall outside it.
+image: rancher/k3s:v1.35.6-k3s1
+
+servers: 1
+agents: 2
+
+ports:
+  # Exposes the cluster's built-in load balancer on high host ports so Ingress
+  # lessons later in the course can reach http://localhost:8080. Ports 80/443 are
+  # avoided because binding them on macOS needs elevated privileges.
+  - port: 8080:80
+    nodeFilters:
+      - loadbalancer
+  - port: 8443:443
+    nodeFilters:
+      - loadbalancer
+
+options:
+  k3d:
+    wait: true
+    # Generous because the first run also pulls the k3s image. On a warm cache
+    # the cluster is usually ready in well under a minute.
+    timeout: "300s"
+  kubeconfig:
+    # Writes the context into ~/.kube/config and switches to it, so `kubectl`
+    # targets this cluster immediately after create.
+    updateDefaultKubeconfig: true
+    switchCurrentContext: true
