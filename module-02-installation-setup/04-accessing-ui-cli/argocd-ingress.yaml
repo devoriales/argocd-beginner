@@ -1,0 +1,25 @@
+# Reach the Argo CD UI on http://localhost:8080 through the cluster's built-in
+# Traefik ingress controller.
+#
+# This only works once argocd-server runs in insecure mode. By default the server
+# serves HTTPS and redirects any plain HTTP request back to HTTPS, so an ingress
+# that already terminated TLS sends the request round the loop again and the
+# browser reports too many redirects. Turning off the server's own TLS moves TLS
+# termination to the ingress, which is where it belongs once you have one.
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: argocd-server
+  namespace: argocd
+spec:
+  rules:
+    - host: argocd.localhost
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: argocd-server
+                port:
+                  number: 80
