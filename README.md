@@ -89,6 +89,28 @@ The second most common failure is pods being evicted in a loop because the Docke
 disk is nearly full. Argo CD runs seven components; keep a few GB free and check
 `kubectl get nodes` for `DiskPressure` after installing.
 
+The third is the API server briefly going away:
+
+```
+Unable to connect to the server: net/http: TLS handshake timeout
+```
+
+On a four CPU VM this is normal and self-correcting. It happened three times while this
+course was being built, always during a burst of work (just after creating the cluster,
+just after installing Argo CD, or during a sync that reconciles several applications),
+and always cleared within a few minutes.
+
+The cause is CPU saturation, not memory, so `free` will show nothing wrong. Check load
+average instead:
+
+```bash
+colima ssh -- uptime      # load average above ~20 on 4 CPUs means wait, not debug
+```
+
+`install.sh` already waits and retries around this. For ad hoc `kubectl` commands, wait a
+minute and run it again. Six to eight CPUs removes the pauses if your machine can spare
+them.
+
 ## Repository layout
 
 One folder per module, matching the course's module numbering. Inside a module, one
