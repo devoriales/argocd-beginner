@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: prod-kustom
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: kustom
+  template:
+    metadata:
+      labels:
+        app: kustom
+    spec:
+      containers:
+        - image: nginx:1.29-alpine
+          name: nginx
+          resources:
+            limits:
+              memory: 64Mi
+            requests:
+              cpu: 10m
+              memory: 16Mi

@@ -1,0 +1,7 @@
+{
+  "repoURL": "git@github.com:devoriales/argocd-beginner.git",
+  "drySha": "92aaf109b1e8855f0d4aae5cf62a6e40b024a8ae",
+  "author": "Aleksandro Matejic <alexmatejic@hotmail.com>",
+  "date": "2026-07-29T13:31:38Z",
+  "subject": "Module 6: Git generator environment directories and a List generator ApplicationSet"
+}

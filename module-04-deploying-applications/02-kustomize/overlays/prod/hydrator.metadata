@@ -1,0 +1,7 @@
+{
+  "repoURL": "git@github.com:devoriales/argocd-beginner.git",
+  "drySha": "92aaf109b1e8855f0d4aae5cf62a6e40b024a8ae",
+  "commands": [
+    "kustomize build ./module-04-deploying-applications/02-kustomize/overlays/prod"
+  ]
+}
