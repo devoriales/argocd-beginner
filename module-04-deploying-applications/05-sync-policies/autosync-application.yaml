@@ -10,7 +10,10 @@ spec:
   source:
     repoURL: https://github.com/devoriales/argocd-beginner.git
     targetRevision: main
-    path: module-04-deploying-applications/02-kustomize/overlays/dev
+    # Its own manifests. Two Applications must never manage the same resources:
+    # the second one takes ownership and the first goes OutOfSync against resources
+    # it no longer controls, with nothing in the UI naming the cause.
+    path: module-04-deploying-applications/05-sync-policies/manifests
   destination:
     server: https://kubernetes.default.svc
     namespace: demo
