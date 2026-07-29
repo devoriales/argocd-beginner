@@ -1,0 +1,27 @@
+# Wave 0: the thing that must finish before anything else starts.
+#
+# This stands in for a database migration. It is a plain Job, not a hook: it is
+# part of the application's resource set and Argo CD tracks its health like any
+# other resource. A Job is Healthy only once it has Completed, which is what
+# makes the wave gate meaningful.
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: waves-migrate
+  annotations:
+    # Lower waves run first. Negative numbers are allowed, and 0 is the default
+    # for anything without this annotation.
+    argocd.argoproj.io/sync-wave: "0"
+spec:
+  backoffLimit: 0
+  template:
+    metadata:
+      labels:
+        app: waves-migrate
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: migrate
+          image: busybox:1.37
+          # Fifteen seconds is long enough to watch the next wave wait for it.
+          command: ["sh", "-c", "echo 'applying schema migration'; sleep 15; echo 'migration complete'"]

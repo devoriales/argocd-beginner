@@ -1,0 +1,24 @@
+# Wave 2: runs only after the application reports Healthy.
+#
+# A Deployment is Healthy when its rollout is complete and its replicas are
+# available, so by the time this Job starts there is something to test. Ordering
+# this by hand with kubectl means either sleeping and hoping, or writing a wait
+# loop in CI.
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: waves-smoketest
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+spec:
+  backoffLimit: 0
+  template:
+    metadata:
+      labels:
+        app: waves-smoketest
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: smoketest
+          image: busybox:1.37
+          command: ["sh", "-c", "echo 'smoke test: app is up'; sleep 2"]

@@ -1,0 +1,22 @@
+# One directory, three resources, three waves.
+#
+# Nothing in this Application mentions ordering. The waves live as annotations
+# on the resources themselves, which means the ordering travels with the
+# manifests rather than with whoever happens to be deploying them.
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: waves
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/devoriales/argocd-beginner.git
+    targetRevision: main
+    path: module-05-sync-strategies/01-sync-waves/manifests
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: demo
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true

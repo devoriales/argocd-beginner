@@ -1,0 +1,31 @@
+# Wave 1: the application itself.
+#
+# Argo CD will not apply this until every resource in wave 0 reports Healthy,
+# which for the migration Job means Completed. Without the wave annotation this
+# Deployment and that Job would be applied together, and the app would start
+# against an unmigrated database.
+#
+# Note that built-in kind ordering cannot express this. Kind ordering has no
+# opinion about Job versus Deployment, and it certainly has no concept of
+# waiting for one to finish.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: waves-app
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: waves-app
+  template:
+    metadata:
+      labels:
+        app: waves-app
+    spec:
+      containers:
+        - name: app
+          image: nginx:1.29-alpine
+          ports:
+            - containerPort: 80
