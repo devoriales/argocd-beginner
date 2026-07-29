@@ -1,0 +1,19 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: policies-nopolicy
+  annotations:
+    argocd.argoproj.io/hook: PreSync
+    # deliberately no hook-delete-policy
+spec:
+  backoffLimit: 0
+  template:
+    metadata:
+      labels:
+        app: policies-nopolicy
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: h
+          image: busybox:1.37
+          command: ["sh", "-c", "echo 'nopolicy'; sleep 2"]
