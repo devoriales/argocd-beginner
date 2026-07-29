@@ -1,0 +1,15 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: windowed-app
+  namespace: argocd
+spec:
+  # The window comes from the project, not from the Application.
+  project: windowed
+  source:
+    repoURL: https://github.com/devoriales/argocd-beginner.git
+    targetRevision: main
+    path: module-03-core-concepts/05-app-of-apps/workloads/web
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: demo

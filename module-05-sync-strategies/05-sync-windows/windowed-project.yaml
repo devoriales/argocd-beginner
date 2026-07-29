@@ -1,0 +1,29 @@
+# An AppProject carrying a sync window.
+#
+# Windows are scheduling policy, not permission policy. They answer "may a sync
+# happen right now", which is a different question from "is this repo allowed",
+# and they are evaluated per Application through the project it belongs to.
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: windowed
+  namespace: argocd
+spec:
+  sourceRepos: ['*']
+  destinations:
+    - server: '*'
+      namespace: '*'
+  clusterResourceWhitelist:
+    - group: '*'
+      kind: '*'
+  syncWindows:
+    # A deny window that is always active, so the demo is deterministic rather
+    # than depending on what time you happen to run it. A real one looks like
+    # schedule: '0 9 * * 1-5' with duration 8h, meaning office hours.
+    - kind: deny
+      schedule: '* * * * *'
+      duration: 24h
+      applications: ['*']
+      # Flip this to true and a human may still sync by hand while automation
+      # stays blocked. That is the useful setting for a change freeze.
+      manualSync: false
