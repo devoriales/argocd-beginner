@@ -1,0 +1,42 @@
+# The simplest generator: a literal list.
+#
+# One ApplicationSet, three Applications. The generator produces a set of
+# parameter maps, and the template is instantiated once per map with {{...}}
+# placeholders filled in.
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: list-demo
+  namespace: argocd
+spec:
+  generators:
+    - list:
+        elements:
+          - env: dev
+            replicas: "1"
+          - env: staging
+            replicas: "2"
+          - env: prod
+            replicas: "3"
+  template:
+    metadata:
+      # Every generated Application needs a distinct name, so the template name
+      # must include a parameter. Forget this and the ApplicationSet generates
+      # three Applications with the same name, which is one Application that
+      # keeps being rewritten.
+      name: 'list-{{env}}'
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/devoriales/argocd-beginner.git
+        targetRevision: main
+        path: 'module-06-applicationsets/03-git-generator/envs/{{env}}'
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: demo
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
