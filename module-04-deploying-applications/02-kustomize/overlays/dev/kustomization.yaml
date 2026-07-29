@@ -1,0 +1,8 @@
+# The dev overlay takes the base unchanged apart from a name prefix. Argo CD points at
+# THIS directory, not at base, and renders it with the kustomize binary baked into the
+# repo-server.
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namePrefix: dev-
+resources:
+  - ../../base

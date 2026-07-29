@@ -1,0 +1,13 @@
+# Same base, different answers. This is the whole argument for Kustomize: one set of
+# manifests, per-environment differences expressed as patches rather than as copies.
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namePrefix: prod-
+resources:
+  - ../../base
+patches:
+  - target: {kind: Deployment, name: kustom}
+    patch: |
+      - op: replace
+        path: /spec/replicas
+        value: 3

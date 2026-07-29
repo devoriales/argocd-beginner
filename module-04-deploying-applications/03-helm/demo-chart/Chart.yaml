@@ -1,0 +1,6 @@
+apiVersion: v2
+name: demo-chart
+description: A deliberately tiny chart, so the lesson is about Argo CD rather than Helm.
+type: application
+version: 0.1.0
+appVersion: "1.29"
