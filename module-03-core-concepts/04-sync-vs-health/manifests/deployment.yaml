@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: broken
+  labels:
+    app: broken
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: broken
+  template:
+    metadata:
+      labels:
+        app: broken
+    spec:
+      containers:
+        - name: app
+          # This tag does not exist. That is the point: the manifest is perfectly valid
+          # YAML and applies cleanly, so Argo CD reports Synced. The pod then fails to
+          # pull, so health goes Degraded. Synced and Healthy are answering two
+          # different questions.
+          image: nginx:this-tag-does-not-exist
+          resources:
+            requests:
+              cpu: 10m
+              memory: 16Mi
