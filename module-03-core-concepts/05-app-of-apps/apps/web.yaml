@@ -1,14 +1,14 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: managed-demo
+  name: managed-web
   namespace: argocd
 spec:
   project: default
   source:
     repoURL: https://github.com/devoriales/argocd-beginner.git
     targetRevision: main
-    path: module-03-core-concepts/01-application-crd/manifests
+    path: module-03-core-concepts/05-app-of-apps/workloads/web
   destination:
     server: https://kubernetes.default.svc
     namespace: demo
