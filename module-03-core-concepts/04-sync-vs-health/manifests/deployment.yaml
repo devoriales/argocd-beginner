@@ -6,6 +6,10 @@ metadata:
     app: broken
 spec:
   replicas: 1
+  # Kubernetes waits 600s by default before calling a stalled rollout failed, which
+  # would leave this app sitting at Progressing for ten minutes. One minute is long
+  # enough to be honest about what is happening and short enough to watch.
+  progressDeadlineSeconds: 60
   selector:
     matchLabels:
       app: broken
