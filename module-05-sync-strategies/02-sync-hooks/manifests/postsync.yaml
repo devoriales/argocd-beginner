@@ -1,0 +1,24 @@
+# A PostSync hook: runs only after every resource is applied AND reports Healthy.
+#
+# That health gate is what makes PostSync the right place for a smoke test. A
+# Sync-phase hook would run alongside the Deployment being applied, when there is
+# nothing serving yet.
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: hooks-postsync
+  annotations:
+    argocd.argoproj.io/hook: PostSync
+    argocd.argoproj.io/hook-delete-policy: BeforeHookCreation
+spec:
+  backoffLimit: 0
+  template:
+    metadata:
+      labels:
+        app: hooks-postsync
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: postsync
+          image: busybox:1.37
+          command: ["sh", "-c", "echo 'PostSync: verifying rollout'; sleep 3"]

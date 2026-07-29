@@ -1,0 +1,24 @@
+# An ordinary resource, with no hook annotation at all.
+#
+# This is the actual application. Everything the hooks do happens around this
+# being applied, and this is the only one of the three that Argo CD treats as
+# desired state to be kept in sync.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hooks-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hooks-app
+  template:
+    metadata:
+      labels:
+        app: hooks-app
+    spec:
+      containers:
+        - name: app
+          image: nginx:1.29-alpine
+          ports:
+            - containerPort: 80
