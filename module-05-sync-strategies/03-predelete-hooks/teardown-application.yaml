@@ -1,0 +1,22 @@
+# The finalizer is what makes deletion cascade to the managed resources, and
+# therefore what gives the PreDelete hook anything to run before. Without it,
+# deleting this Application orphans the Deployment and the hook never fires.
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: teardown
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/devoriales/argocd-beginner.git
+    targetRevision: main
+    path: module-05-sync-strategies/03-predelete-hooks/manifests
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: demo
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true

@@ -1,10 +1,11 @@
 # A PreSync hook: runs to completion BEFORE any resource in the sync is applied.
 #
 # The difference from a wave-0 Job is not when it runs, which is similar, but
-# what it IS. A hook is not part of the application's resource set. Argo CD does
-# not diff it, does not report it as OutOfSync, and never prunes it as drift.
-# It is a task attached to the sync operation, not a thing the cluster should
-# permanently contain.
+# what it IS. A hook still appears in the Application's resource list, marked
+# `hook: true`, but it carries no sync status and is flagged requiresPruning.
+# Delete a completed hook Job by hand and the Application stays Synced, because
+# a hook is a task attached to the sync operation rather than desired state the
+# cluster is supposed to keep.
 apiVersion: batch/v1
 kind: Job
 metadata:

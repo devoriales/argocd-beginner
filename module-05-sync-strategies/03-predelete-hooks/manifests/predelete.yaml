@@ -1,0 +1,29 @@
+# A PreDelete hook: runs when the APPLICATION is deleted, before its resources
+# are removed.
+#
+# This is the only hook phase that is not part of a sync. It exists for the work
+# that has to happen while the application still exists: taking a final backup,
+# deregistering from a service mesh, releasing a licence seat, draining a queue.
+#
+# It only runs on a cascading delete. Delete the Application with
+# --cascade=orphan and the resources stay, so there is nothing to clean up and
+# the hook does not fire.
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: teardown-backup
+  annotations:
+    argocd.argoproj.io/hook: PreDelete
+    argocd.argoproj.io/hook-delete-policy: BeforeHookCreation
+spec:
+  backoffLimit: 0
+  template:
+    metadata:
+      labels:
+        app: teardown-backup
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: backup
+          image: busybox:1.37
+          command: ["sh", "-c", "echo 'PreDelete: taking final backup'; sleep 5; echo 'backup complete'"]
