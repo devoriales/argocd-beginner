@@ -1,7 +1,7 @@
-# Module 7 — Multi-Cluster & Multi-Tenant Operations
+# Module 7: Multi-Cluster & Multi-Tenant Operations
 
 Runnable artifacts for this module. Lesson prose lives on
-[devoriales.com](https://devoriales.com) — this folder holds only what you run.
+[devoriales.com](https://devoriales.com). This folder holds only what you run.
 
 | # | Lesson | Artifacts |
 | --- | --- | --- |

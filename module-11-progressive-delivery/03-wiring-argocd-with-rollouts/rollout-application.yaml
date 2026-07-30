@@ -1,0 +1,25 @@
+# The Application does not mention Rollouts anywhere. It deploys a Rollout object
+# exactly as it would deploy a Deployment, which is the point of the seam:
+# Argo CD owns the object, Argo Rollouts owns the progression.
+#
+# Note there is no automated sync. Promotion in this lesson is deliberate, and
+# selfHeal would fight an Argo Rollouts rollback (see the lesson).
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: canary-web
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/devoriales/argocd-beginner.git
+    targetRevision: main
+    # Switching this path from v1 to v2 stands in for merging a commit that bumps
+    # the image tag. The desired state still comes from Git either way.
+    path: module-11-progressive-delivery/03-wiring-argocd-with-rollouts/v1
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: canary-demo
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true

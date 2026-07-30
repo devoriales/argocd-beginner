@@ -1,0 +1,17 @@
+# Wave -1: the project must exist before any Application that references it.
+# Module 5's first ordering rule, applied to the platform's own resources.
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: platform
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
+spec:
+  description: Applications the platform team owns.
+  sourceRepos:
+    - https://github.com/devoriales/argocd-beginner.git
+  destinations:
+    - server: https://kubernetes.default.svc
+      namespace: 'platform-*'
+  clusterResourceWhitelist: []

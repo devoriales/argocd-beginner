@@ -1,10 +1,10 @@
-# Argo CD for Beginners — course artifacts
+# Argo CD for Beginners: course artifacts
 
 Runnable artifacts for the **Argo CD beginner course** on
 **[devoriales.com](https://devoriales.com)**.
 
-This repository is a companion to the course, not a replacement for it. The lessons —
-the explanation, the reasoning, the screenshots — live on devoriales.com. What lives
+This repository is a companion to the course, not a replacement for it. The lessons -
+the explanation, the reasoning, the screenshots, live on devoriales.com. What lives
 here is only the code you actually run: manifests, Helm values, Kustomize overlays,
 cluster configs, and scripts. Clone it and follow along rather than copy-pasting from
 your browser.
@@ -12,13 +12,13 @@ your browser.
 ## Who this is for
 
 You are comfortable with `kubectl`, basic YAML, and containers, and you are new to
-**Argo CD specifically** — not new to Kubernetes. Git and general CD concepts are
+**Argo CD specifically**, not new to Kubernetes. Git and general CD concepts are
 assumed familiar. The course does not re-teach Kubernetes fundamentals or Git basics.
 
 ## Pinned versions
 
 Every artifact here was executed against exactly these versions. They are not
-"minimum" or "recommended" versions — they are what was tested. If you run something
+"minimum" or "recommended" versions, they are what was tested. If you run something
 else and behavior differs, this table is the first thing to check.
 
 | Component | Version |
@@ -41,7 +41,7 @@ Two of these pins are less obvious than they look:
   Older minors like 1.31 are both EOL upstream and outside that tested matrix.
 - **Helm v3.19.4 and Kustomize v5.8.1** match the versions baked into the Argo CD
   3.4.5 repo-server image. Argo CD renders your charts and overlays server-side with
-  *its own* binaries, not yours — so if your local Helm differs, `helm template` on
+  *its own* binaries, not yours, so if your local Helm differs, `helm template` on
   your laptop can legitimately produce different output than what Argo CD applies.
   Matching them removes that surprise. You can always check what your cluster uses:
 
@@ -64,7 +64,7 @@ the cluster from the config in this repo:
 k3d cluster create --config module-02-installation-setup/01-k3d-local-environment/k3d-cluster-config.yaml
 ```
 
-That lesson stops at "cluster is up and reachable" — Argo CD itself is installed in the
+That lesson stops at "cluster is up and reachable", Argo CD itself is installed in the
 next lesson.
 
 ### If cluster creation fails
@@ -114,7 +114,7 @@ them.
 ## Repository layout
 
 One folder per module, matching the course's module numbering. Inside a module, one
-folder per lesson **that has runnable artifacts** — conceptual lessons have none, and
+folder per lesson **that has runnable artifacts**, conceptual lessons have none, and
 Module 1 is conceptual throughout, so it has no folder here.
 
 Each lesson folder contains only what the course has taught up to that point. Nothing
@@ -137,9 +137,9 @@ time rather than shipping empty placeholders.
 Everything here is executed before publication, but environments drift and upstream
 images change. If an artifact doesn't work, please
 [open an issue](https://github.com/devoriales/argocd-beginner/issues/new?template=broken-code.md)
-and include your versions from the table above — that is almost always the fastest
+and include your versions from the table above, that is almost always the fastest
 path to a diagnosis.
 
 ## License
 
-MIT — see [LICENSE](LICENSE).
+MIT, see [LICENSE](LICENSE).

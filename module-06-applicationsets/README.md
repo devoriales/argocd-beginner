@@ -1,11 +1,11 @@
-# Module 6 — ApplicationSets
+# Module 6: ApplicationSets
 
 Runnable artifacts for this module. Lesson prose lives on
-[devoriales.com](https://devoriales.com) — this folder holds only what you run.
+[devoriales.com](https://devoriales.com). This folder holds only what you run.
 
 | # | Lesson | Artifacts |
 | --- | --- | --- |
-| 1 | Why ApplicationSets exist | _none — conceptual_ |
+| 1 | Why ApplicationSets exist | _none, conceptual_ |
 | 2 | Generators: List, Cluster, Git, Matrix, SCM Provider | `02-*/` |
 | 3 | Managing ApplicationSets via CLI/Git today | `03-*/` |
 | 4 | Multi-tenant, multi-environment patterns | `04-*/` |

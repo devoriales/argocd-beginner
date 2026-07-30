@@ -1,0 +1,30 @@
+# A Rollout instead of a Deployment. Everything above `strategy` is what a
+# Deployment already has: replicas, selector, template. Migration is changing
+# `kind` and adding the strategy block.
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  name: web
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: web
+  template:
+    metadata:
+      labels:
+        app: web
+    spec:
+      containers:
+        - name: web
+          image: nginx:1.28-alpine
+          ports:
+            - containerPort: 80
+  strategy:
+    canary:
+      steps:
+        # 4 replicas, so 25% is exactly one pod on the new version.
+        - setWeight: 25
+        # An empty pause waits indefinitely for a human. A `pause: {duration: 5m}`
+        # would continue on its own.
+        - pause: {}

@@ -1,0 +1,12 @@
+# One Service in front of both revisions. During a canary the selector matches
+# old and new pods alike, so traffic splits by pod count.
+apiVersion: v1
+kind: Service
+metadata:
+  name: web
+spec:
+  selector:
+    app: web
+  ports:
+    - port: 80
+      targetPort: 80

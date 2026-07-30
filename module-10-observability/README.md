@@ -1,7 +1,7 @@
-# Module 10 — Observability & Troubleshooting
+# Module 10: Observability & Troubleshooting
 
 Runnable artifacts for this module. Lesson prose lives on
-[devoriales.com](https://devoriales.com) — this folder holds only what you run.
+[devoriales.com](https://devoriales.com). This folder holds only what you run.
 
 | # | Lesson | Artifacts |
 | --- | --- | --- |
@@ -9,7 +9,7 @@ Runnable artifacts for this module. Lesson prose lives on
 | 2 | Notifications engine (Slack, email, webhook triggers) | `02-*/` |
 | 3 | Metrics: exposing ArgoCD to Prometheus/Grafana | `03-*/` |
 | 4 | Common failure patterns: stuck syncs, orphaned resources, finalizer deadlocks | `04-*/` |
-| 5 | Debugging repo-server and application controller logs | _none — conceptual_ |
+| 5 | Debugging repo-server and application controller logs | _none, conceptual_ |
 
 Folders appear here as each lesson is published and verified. A lesson folder
 contains only what the course has taught up to that point.

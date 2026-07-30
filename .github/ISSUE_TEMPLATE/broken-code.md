@@ -1,13 +1,13 @@
 ---
 name: Broken code or command
 about: An artifact, command, or manifest in this repo does not work as the lesson describes
-title: "[broken] Module NN Lesson NN — short description"
+title: "[broken] Module NN Lesson NN, short description"
 labels: broken-code
 ---
 
 ## Which lesson
 
-- **Module / lesson:** <!-- e.g. Module 2, Lesson 2 — Installing Argo CD -->
+- **Module / lesson:** <!-- e.g. Module 2, Lesson 2, Installing Argo CD -->
 - **Folder:** <!-- e.g. module-02-installation-setup/02-install-argocd/ -->
 - **Lesson URL:** <!-- the devoriales.com page, if relevant -->
 
@@ -34,7 +34,7 @@ labels: broken-code
 
 ## Your versions
 
-Please paste real output rather than filling this in from memory — a version mismatch
+Please paste real output rather than filling this in from memory, a version mismatch
 is the single most common cause, and it is invisible when transcribed by hand.
 
 ```bash
