@@ -14,4 +14,14 @@ spec:
   destinations:
     - server: https://kubernetes.default.svc
       namespace: 'platform-*'
-  clusterResourceWhitelist: []
+  # Module 8 recommends an empty clusterResourceWhitelist for tenant projects, and
+  # that is right for tenants. It cannot be empty here, because the Applications
+  # below use CreateNamespace=true and a Namespace is cluster-scoped.
+  #
+  # Getting this wrong fails in the worst way: the child Application sits at
+  # OutOfSync/Missing with NO conditions, and the real message is only in
+  # status.operationState.syncResult:
+  #   resource :Namespace is not permitted in project platform
+  clusterResourceWhitelist:
+    - group: ''
+      kind: Namespace
